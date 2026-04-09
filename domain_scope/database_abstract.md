@@ -1,10 +1,18 @@
 # Datatabase main entities
 
 **Device** - IoT device that is either sensor device (gather data) or display device (present data)
+
 **Reading** - entity of momentary sensor device readout (momentary readouts at specific times)
+
 **Metric** - derfines what kind of data can be measured (unit of measurement, data type, sensor specific metadata)
-**Display source** - junction entity that describes a "who shows who" between display devices and sensor devices, each display device can present data from multiple sensor devices
-**External subscriber** - .........................................
+
+**Display source** - junction entity that describes a "who shows what" between display devices and sensor devices, each display device can present data from multiple sensor devices (through specific metric). Device can have multiple display sources that come by metric from another device. 
+
+**External device** - external device additional configuration if the device is from external sources (provides definition on protocol, pushing/pooling, etc.). It is not existing for standard devices (either local sensors or displays). Defined as external entity to differenciate from standard devices that cannot use that configuration (local configuration is above external, if defined external entity for device then internal fields have to be cleared).
+
+**External integration** - exporting or syncing scoped data to outside systems (webhooks, external DBs, APIs etc.). An integration must have at least one metric defined (external integration is defined if it provides at least one readout)
+
+**Integration metric** - junction entity that defines which metrics are scoped to external integration. Metric scoped to zero means that the external integration is not defined (system scope). 
 
 ```mermaid
 erDiagram
@@ -12,16 +20,13 @@ erDiagram
     READING }o--|| METRIC  : "has"
     DEVICE ||--|{ METRIC : "owns"
 
-    DEVICE ||--o{ DISPLAY_SOURCE : "displays data from"
-    DEVICE ||--o{ DISPLAY_SOURCE : "provides data to"
+    DEVICE ||--o{ DISPLAY_SOURCE : "can have defined multiple"
+    DISPLAY_SOURCE ||--|{ METRIC : "shows specific readout with from another device"
+    DEVICE ||--o| EXTERNAL_DEVICE_CONFIG : "can have if is external"
 
-    DISPLAY_SOURCE ||--|{ METRIC : "shows specific readout with"
+    METRIC ||--o{ INTEGRATION_METRIC : "can be scoped to"
+    EXTERNAL_INTEGRATION ||--|{ INTEGRATION_METRIC : "defines at least one"
 ```
-
-The things to think of:
-1) Should we drop the source association aka. 'provides data to' as it is redundant (we can get the souce device via metric)
-2) How we should handle external data subscribers?
-3) Do we enable data to be provided to that hub system (sensor readouts from external systems?) .. it would be nice to have
 
 Define the entities structure and what is important in them ...
 
