@@ -28,6 +28,26 @@ erDiagram
     EXTERNAL_INTEGRATION ||--|{ INTEGRATION_METRIC : "defines at least one"
 ```
 
+Define entities:
+- device groups - managing devices within a group, cluster devices logically by room, section, floor, building, function
+a) device template - blueprint of the standard internal device for the specific model that enables for dafaulkt values during setup
+b) location group - free form hierarchcal groiuping (no matter the device model)
+c) device group - flat grouping of the same sensor model (to manage few devices at a time)
+
+- device tagging - tagging similar devices, managing tags, ..could be within device entity fields tho
+
+- external integration types - external integration as the dataset definition can be provided in the same form to the multiple receivers (like hooks etc. at the same time ... data scope is the same but defining each is cumbersome if we have defined data scope already)
+- alert/treshold - alerts if the readouts crosses specified treshold then make action in system (message, notification, hook etc.)
+
+- logs - tracking the device events (readouts, reboots, failures, config changes, offline) through a course of the time to analyze if the device have faults or unexpected behaviours
+
+- user/account
+- RBA (role based access)
+
+
+
+
+
 Define the entities structure and what is important in them ...
 
 
