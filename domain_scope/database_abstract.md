@@ -14,6 +14,8 @@
 
 **Integration metric** - junction entity that defines which metrics are scoped to external integration. Metric scoped to zero means that the external integration is not defined (system scope). 
 
+**DEVICE_TEMPLATE** - definition of the specific sensor type that can is used during the device definition (as the defaults) hardware soecific defaults.
+
 ```mermaid
 erDiagram
 
@@ -26,6 +28,11 @@ erDiagram
 
     METRIC ||--o{ INTEGRATION_METRIC : "can be scoped to"
     EXTERNAL_INTEGRATION ||--|{ INTEGRATION_METRIC : "defines at least one"
+
+
+    DEVICE_TEPLATE ||--o{ DEVICE : "can be defined to"
+    LOCATION_GRUP ||--o{ LOCATION_GRUP : "parent of"
+    
 ```
 
 Define entities:
